@@ -18,4 +18,12 @@ for (const file of files) {
     console.log(`Copied ${file} -> assets/index.css`);
   }
 }
-console.log('Bundle assets successfully mirrored to root /assets for direct GitHub Pages compatibility.');
+
+const rootIndexHtml = path.join(__dirname, 'index.html');
+const distIndexHtml = path.join(__dirname, 'dist', 'index.html');
+if (fs.existsSync(rootIndexHtml)) {
+  fs.copyFileSync(rootIndexHtml, distIndexHtml);
+  console.log('Copied index.html -> dist/index.html');
+}
+
+console.log('Bundle assets and index.html successfully synchronized for both root and dist GitHub Pages deployments.');
