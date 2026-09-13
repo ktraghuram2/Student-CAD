@@ -4,9 +4,14 @@ An authentic, browser-based **2D & 3D Computer-Aided Design (CAD)** platform eng
 
 ---
 
-## 🚀 Live Demo & Getting Started
+## 🚀 Live Web Page & Getting Started
 
-### Run Locally:
+### 🌐 Live Web Application:
+👉 **[https://ktraghuram2.github.io/Student-CAD/](https://ktraghuram2.github.io/Student-CAD/)**
+
+*(To enable on GitHub: Go to **Settings** → **Pages** → Source: **GitHub Actions**)*
+
+### 💻 Run Locally:
 ```bash
 # Clone the repository
 git clone https://github.com/ktraghuram2/Student-CAD.git
