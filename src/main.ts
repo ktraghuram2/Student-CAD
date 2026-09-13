@@ -1021,7 +1021,25 @@ class StudentCADApp {
   }
 }
 
-// Start application when DOM is ready
-window.addEventListener('DOMContentLoaded', () => {
-  new StudentCADApp();
-});
+// Start application when DOM is ready or immediately if already loaded
+function initStudentCAD() {
+  console.log('[Student-CAD] Booting application...');
+  try {
+    const app = new StudentCADApp();
+    (window as any).studentCADApp = app;
+    console.log('[Student-CAD] Successfully mounted AutoCAD replica GUI.');
+    // Trigger window resize to ensure WebGL canvas fits layout
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+    }, 50);
+  } catch (err) {
+    console.error('[Student-CAD] Initialization error:', err);
+  }
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initStudentCAD);
+} else {
+  initStudentCAD();
+}
+
