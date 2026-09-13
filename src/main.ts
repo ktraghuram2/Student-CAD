@@ -1,3 +1,4 @@
+import './styles/autocad.css';
 import * as THREE from 'three';
 import { CADEngine } from './core/cad-engine';
 import { ViewCube } from './core/viewcube';

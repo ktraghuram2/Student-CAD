@@ -7,6 +7,13 @@ export default defineConfig({
     host: true
   },
   build: {
-    outDir: 'dist'
+    outDir: 'dist',
+    rollupOptions: {
+      input: './src/main.ts',
+      output: {
+        entryFileNames: 'assets/index.js',
+        assetFileNames: 'assets/index.[ext]'
+      }
+    }
   }
 });
