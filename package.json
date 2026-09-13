@@ -1,0 +1,21 @@
+{
+  "name": "student-cad",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 5173 --host",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "three": "^0.170.0",
+    "three-bvh-csg": "^0.0.16",
+    "lucide": "^0.475.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.170.0",
+    "typescript": "^5.7.3",
+    "vite": "^6.2.0"
+  }
+}

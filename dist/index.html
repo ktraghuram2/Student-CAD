@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student-CAD - AutoCAD Replica for Engineering Students</title>
+  <script type="module" crossorigin src="/assets/index-wjoBsrgH.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-BABw6KUX.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Top Application Title Bar & Quick Access Toolbar -->
+    <header class="acad-titlebar">
+      <!-- Big Red "A" Application Menu Button -->
+      <div class="acad-app-btn" id="btn-app-menu" title="Application Menu">A</div>
+
+      <!-- Quick Access Toolbar -->
+      <div class="acad-qat">
+        <button class="acad-tool-btn" id="qat-new" title="New (Ctrl+N)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg></button>
+        <button class="acad-tool-btn" id="qat-open" title="Open DXF (Ctrl+O)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg></button>
+        <button class="acad-tool-btn" id="qat-save" title="Save DXF (Ctrl+S)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg></button>
+        <button class="acad-tool-btn" id="qat-plot" title="Plot / Print Sheet (Ctrl+P)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></button>
+        <button class="acad-tool-btn" id="qat-undo" title="Undo (Ctrl+Z)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg></button>
+        <button class="acad-tool-btn" id="qat-redo" title="Redo (Ctrl+Y)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
+
+        <select class="acad-workspace-select" id="workspace-select">
+          <option value="drafting">Drafting & Annotation (2D)</option>
+          <option value="3d_basics">3D Basics</option>
+          <option value="3d_modeling" selected>3D Modeling</option>
+        </select>
+      </div>
+
+      <!-- File Title -->
+      <div class="acad-title">
+        <span>Student-CAD 2025</span> &mdash; [Drawing1.dwg]
+      </div>
+
+      <div class="acad-window-controls">
+        <span class="badge-student">Diploma & B.Tech Edition</span>
+      </div>
+    </header>
+
+    <!-- AutoCAD Ribbon Toolbar -->
+    <div class="acad-ribbon" id="acad-ribbon"></div>
+
+    <!-- Main CAD Viewport -->
+    <main class="acad-workspace" id="acad-workspace">
+      <!-- In-Canvas Viewport Controls (Top Left) -->
+      <div class="acad-viewport-controls">
+        <span>[-]</span>
+        <span id="vp-view-name">[Top]</span>
+        <span id="vp-style-name">[2D Wireframe]</span>
+      </div>
+
+      <!-- Three.js CAD Canvas -->
+      <canvas id="cad-canvas"></canvas>
+
+      <!-- ViewCube Navigation (Top Right) -->
+      <div class="acad-viewcube-container" id="viewcube-container">
+        <button class="viewcube-home-btn" id="viewcube-home" title="Home View (SW Isometric)">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </button>
+      </div>
+
+      <!-- Navigation Bar (Right) -->
+      <div class="acad-nav-bar">
+        <button class="acad-nav-btn" id="nav-pan" title="Pan (P)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/><path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v2"/><path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg>
+        </button>
+        <button class="acad-nav-btn" id="nav-zoom" title="Zoom Extents (Z -> E)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16" y2="16"/><polyline points="8 11 11 8 14 11"/><polyline points="8 11 11 14 14 11"/></svg>
+        </button>
+        <button class="acad-nav-btn" id="nav-orbit" title="3D Free Orbit (3DO)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9" stroke-dasharray="3,3"/><ellipse cx="12" cy="12" rx="9" ry="4"/><circle cx="12" cy="12" r="2" fill="#0084ff"/></svg>
+        </button>
+      </div>
+
+      <!-- UCS Icon (Bottom Left) -->
+      <div class="acad-ucs-icon" id="ucs-container"></div>
+
+      <!-- Dynamic Input Floating Box -->
+      <div class="acad-dynamic-input" id="dynamic-input"></div>
+
+      <!-- OSNAP Glyph Marker -->
+      <div class="acad-snap-glyph" id="snap-glyph"></div>
+    </main>
+
+    <!-- AutoCAD Command Line Console (Bottom) -->
+    <div class="acad-command-bar" id="acad-command-bar">
+      <div class="acad-command-history" id="cmd-history">
+        <div>Student-CAD Release 2025 (x64) Ready.</div>
+        <div>Type <b>L</b> for LINE, <b>C</b> for CIRCLE, <b>REC</b> for RECTANGLE, <b>EXT</b> for EXTRUDE, <b>BOX</b> for 3D BOX.</div>
+        <div>Press <b>F1</b> or click <b>Lab Exercises</b> to load Diploma/B.Tech syllabus lab problems.</div>
+      </div>
+      <div class="acad-command-input-row">
+        <span class="acad-command-prompt-label" id="cmd-prompt-label">Command:</span>
+        <input type="text" class="acad-command-input" id="cmd-input" placeholder="Type a command" autocomplete="off" spellcheck="false">
+        <div class="acad-autocomplete-popup" id="cmd-autocomplete"></div>
+      </div>
+    </div>
+
+    <!-- AutoCAD Status Bar (Bottom Most Bar) -->
+    <footer class="acad-statusbar">
+      <div class="acad-status-left">
+        <button class="acad-tab-btn active" id="tab-model">Model</button>
+        <button class="acad-tab-btn" id="tab-layout1">Layout1</button>
+        <button class="acad-tab-btn" id="tab-layout2">Layout2</button>
+        <div class="acad-coords" id="coords-display">0.0000, 0.0000, 0.0000</div>
+      </div>
+
+      <div class="acad-status-right">
+        <button class="acad-status-toggle active" id="toggle-grid" title="Display Drawing Grid (F7)">
+          <span>GRID</span>
+        </button>
+        <button class="acad-status-toggle" id="toggle-snap" title="Grid Snap (F9)">
+          <span>SNAP</span>
+        </button>
+        <button class="acad-status-toggle" id="toggle-ortho" title="Restrict Cursor Orthogonally (F8)">
+          <span>ORTHO</span>
+        </button>
+        <button class="acad-status-toggle" id="toggle-polar" title="Polar Tracking (F10)">
+          <span>POLAR</span>
+        </button>
+        <button class="acad-status-toggle active" id="toggle-osnap" title="2D Object Snap (F3)">
+          <span>OSNAP</span>
+        </button>
+        <button class="acad-status-toggle active" id="toggle-dyn" title="Dynamic Input (F12)">
+          <span>DYN</span>
+        </button>
+        <button class="acad-status-toggle" id="toggle-lwt" title="Show/Hide Lineweight">
+          <span>LWT</span>
+        </button>
+        <span style="color: var(--acad-text-dim); padding: 0 4px;">1:1</span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Modal: Layer Properties Manager -->
+  <div class="acad-modal-overlay" id="modal-layers">
+    <div class="acad-modal-dialog">
+      <div class="acad-modal-header">
+        <span>Layer Properties Manager</span>
+        <button class="acad-modal-close" id="btn-close-layers">&times;</button>
+      </div>
+      <div class="acad-modal-body">
+        <div style="margin-bottom: 10px; display: flex; gap: 8px;">
+          <button class="acad-primary-btn" id="btn-new-layer">+ New Layer</button>
+        </div>
+        <table class="acad-table">
+          <thead>
+            <tr>
+              <th>Status</th>
+              <th>Name</th>
+              <th>On</th>
+              <th>Lock</th>
+              <th>Color</th>
+              <th>Linetype</th>
+              <th>Lineweight</th>
+            </tr>
+          </thead>
+          <tbody id="layers-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Lab Curriculum & Exercises Guide -->
+  <div class="acad-modal-overlay" id="modal-lab-guide">
+    <div class="acad-modal-dialog" style="width: 780px;">
+      <div class="acad-modal-header">
+        <span>🎓 Diploma & B.Tech Engineering CAD Laboratory Manual</span>
+        <button class="acad-modal-close" id="btn-close-lab-guide">&times;</button>
+      </div>
+      <div class="acad-modal-body" id="lab-guide-content"></div>
+    </div>
+  </div>
+
+  <!-- Hidden File Input for DXF Import -->
+  <input type="file" id="dxf-file-input" accept=".dxf" style="display: none;">
+
+</body>
+</html>
