@@ -1028,12 +1028,25 @@ function initStudentCAD() {
     const app = new StudentCADApp();
     (window as any).studentCADApp = app;
     console.log('[Student-CAD] Successfully mounted AutoCAD replica GUI.');
+
+    // Dismiss startup splash loader smoothly
+    const loader = document.getElementById('cad-startup-loader');
+    if (loader) {
+      loader.classList.add('fade-out');
+      setTimeout(() => loader.remove(), 400);
+    }
+
     // Trigger window resize to ensure WebGL canvas fits layout
     setTimeout(() => {
       window.dispatchEvent(new Event('resize'));
     }, 50);
   } catch (err) {
     console.error('[Student-CAD] Initialization error:', err);
+    const statusEl = document.getElementById('cad-startup-status');
+    if (statusEl) {
+      statusEl.style.color = '#ff6b6b';
+      statusEl.textContent = 'Startup error: ' + ((err as any)?.message || err);
+    }
   }
 }
 

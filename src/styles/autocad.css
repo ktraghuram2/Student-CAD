@@ -889,3 +889,95 @@ body, html {
 .acad-primary-btn:hover {
   filter: brightness(1.15);
 }
+
+/* Startup Splash / Loading Overlay */
+.cad-startup-loader {
+  position: fixed;
+  inset: 0;
+  background: #14171c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.cad-startup-loader.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.cad-startup-card {
+  background: #1e2229;
+  border: 1px solid #333a46;
+  border-radius: 8px;
+  padding: 32px 40px;
+  text-align: center;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6);
+  max-width: 440px;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cad-startup-logo {
+  width: 56px;
+  height: 56px;
+  background: #d32f2f;
+  color: #fff;
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+  font-weight: 900;
+  font-size: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 12px rgba(211, 47, 47, 0.4);
+}
+
+.cad-startup-title {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.cad-startup-subtitle {
+  color: #8c97a8;
+  font-size: 12px;
+  margin-bottom: 20px;
+}
+
+.cad-startup-bar {
+  width: 100%;
+  height: 4px;
+  background: #2b313b;
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.cad-startup-progress {
+  width: 45%;
+  height: 100%;
+  background: #0084ff;
+  border-radius: 2px;
+  animation: startup-pulse 1.2s infinite ease-in-out;
+}
+
+@keyframes startup-pulse {
+  0% { transform: translateX(-100%); width: 30%; }
+  50% { transform: translateX(100%); width: 60%; }
+  100% { transform: translateX(300%); width: 30%; }
+}
+
+.cad-startup-status {
+  color: #70d8ff;
+  font-family: var(--acad-font-mono);
+  font-size: 11px;
+}

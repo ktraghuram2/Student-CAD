@@ -4,9 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Student-CAD - AutoCAD Replica for Engineering Students</title>
-  <link rel="stylesheet" href="./assets/index.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23d32f2f'/><text x='16' y='24' font-family='Arial,sans-serif' font-size='22' font-weight='900' fill='white' text-anchor='middle'>A</text></svg>">
+  <link rel="stylesheet" href="./assets/index.css?v=2.0.2">
 </head>
 <body>
+  <!-- Startup Splash / Loading Screen -->
+  <div id="cad-startup-loader" class="cad-startup-loader">
+    <div class="cad-startup-card">
+      <div class="cad-startup-logo">A</div>
+      <div class="cad-startup-title">Student-CAD 2025</div>
+      <div class="cad-startup-subtitle">Diploma &amp; B.Tech Engineering CAD Laboratory</div>
+      <div class="cad-startup-bar"><div class="cad-startup-progress"></div></div>
+      <div class="cad-startup-status" id="cad-startup-status">Loading CAD Workspace &amp; 3D Engine...</div>
+    </div>
+  </div>
+
   <div id="app">
     <!-- Top Application Title Bar & Quick Access Toolbar -->
     <header class="acad-titlebar">
@@ -178,14 +190,33 @@
   <input type="file" id="dxf-file-input" accept=".dxf" style="display: none;">
 
   <script type="module">
+    const VERSION = '2.0.2';
     const isDev = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && window.location.port === '5173';
-    if (isDev) {
-      import('./src/main.ts').catch((err) => {
-        console.warn('[Student-CAD] Failed to load TS dev module, falling back to bundle:', err);
-        import('./assets/index.js');
+    const moduleUrl = isDev ? './src/main.ts' : `./assets/index.js?v=${VERSION}`;
+
+    import(moduleUrl)
+      .then(() => {
+        console.log('[Student-CAD] Engine bundle imported successfully.');
+      })
+      .catch((err) => {
+        console.warn('[Student-CAD] Primary module load failed:', err);
+        if (isDev) {
+          import(`./assets/index.js?v=${VERSION}`).catch(handleLoadError);
+        } else {
+          handleLoadError(err);
+        }
       });
-    } else {
-      import('./assets/index.js');
+
+    function handleLoadError(err) {
+      const statusEl = document.getElementById('cad-startup-status');
+      if (statusEl) {
+        statusEl.innerHTML = `
+          <div style="color: #ff6b6b; margin-top: 8px;">Failed to load CAD Engine: ${err?.message || err}</div>
+          <button onclick="window.location.reload(true)" style="margin-top: 12px; padding: 6px 14px; background: #e02424; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">
+            Force Reload (Bypass Cache)
+          </button>
+        `;
+      }
     }
   </script>
 </body>
